@@ -23,19 +23,15 @@ int UniqueFd::release()
 {
     int fd = fd_;
 
-    fd = -1;
+    fd_ = -1;
     return fd;
 }
 
 void UniqueFd::reset(int fd)
 {
-    int temp_fd = -1;
-
-    if (fd > 0)
-    {
-        temp_fd = fd_;
-        fd_ = fd;
-    }
+    int temp_fd = fd_;
+    
+    fd_ = fd;
 
     if (temp_fd > 0)
         ::close(temp_fd);
