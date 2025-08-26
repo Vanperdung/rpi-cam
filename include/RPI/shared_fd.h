@@ -5,6 +5,9 @@
 namespace RPI
 {
 
+/* Fast-forward declaration*/
+class UniqueFd;
+
 class SharedFd final
 {
 public:
@@ -12,6 +15,7 @@ public:
     explicit SharedFd(int &&fd);
     SharedFd(const SharedFd &other);
     SharedFd(SharedFd &&other);
+    SharedFd(UniqueFd &other);
     ~SharedFd();
 
     SharedFd &operator=(const SharedFd &other);

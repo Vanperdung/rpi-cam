@@ -1,5 +1,7 @@
 #include <unistd.h>
 
+#include <utility>
+
 #include <RPI/unique_fd.h>
 
 using namespace RPI;
@@ -23,29 +25,21 @@ int UniqueFd::release()
 {
     int fd = fd_;
 
-    fd = -1;
+    fd_ = -1;
     return fd;
 }
 
 void UniqueFd::reset(int fd)
 {
-    int temp_fd = -1;
-
-    if (fd > 0)
-    {
-        temp_fd = fd_;
-        fd_ = fd;
-    }
-
-    if (temp_fd > 0)
+    if (fd == fd_)
+        return;
+    
+    int temp_fd = std::exchange(fd_, fd);
+    if (temp_fd >= 0)
         ::close(temp_fd);
 }
 
 void UniqueFd::swap(UniqueFd &other)
 {
-    int temp_fd = -1;
-
-    temp_fd = fd_;
-    fd_ = other.fd_;
-    other.fd_ = temp_fd;
+    std::exchange(fd_, other.fd_);
 }

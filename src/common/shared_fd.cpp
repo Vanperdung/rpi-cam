@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include <RPI/shared_fd.h>
+#include <RPI/unique_fd.h>
 #include <RPI/log.h>
 
 using namespace RPI;
@@ -54,6 +55,14 @@ SharedFd::SharedFd(int &&fd)
  */
 SharedFd::SharedFd(const SharedFd &other)
     : fd_(other.fd_)
+{
+}
+
+/**
+ * @brief
+ */
+SharedFd::SharedFd(UniqueFd &other)
+    : SharedFd(other.release())
 {
 }
 
