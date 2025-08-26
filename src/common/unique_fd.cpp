@@ -41,9 +41,5 @@ void UniqueFd::reset(int fd)
 
 void UniqueFd::swap(UniqueFd &other)
 {
-    int temp_fd = -1;
-
-    temp_fd = fd_;
-    fd_ = other.fd_;
-    other.fd_ = temp_fd;
+    std::exchange(fd_, other.fd_);
 }
