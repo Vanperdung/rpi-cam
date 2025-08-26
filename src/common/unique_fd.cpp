@@ -33,7 +33,7 @@ void UniqueFd::reset(int fd)
     
     fd_ = fd;
 
-    if (temp_fd > 0)
+    if (temp_fd >= 0)
         ::close(temp_fd);
 }
 

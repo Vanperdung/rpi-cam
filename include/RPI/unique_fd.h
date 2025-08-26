@@ -18,6 +18,13 @@ public:
     int get() const { return fd_; }
 
     UniqueFd &operator=(const UniqueFd &other) = delete;
+    UniqueFd &operator=(UniqueFd &&other)
+    {
+        if (this != &other)
+            reset(other.release());
+        
+        return *this;
+    }
 
 private:
     int fd_;

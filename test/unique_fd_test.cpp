@@ -74,7 +74,6 @@ public:
             return RPI_FAILED;
         }
 
-
         {
             UniqueFd unique_fd4 = std::move(unique_fd3);
         }
@@ -93,7 +92,7 @@ public:
 
     eStatus cleanup() override
     {
-        if (fd_ > 0)
+        if (fd_ >= 0)
             ::close(fd_);
 
         return RPI_SUCCESS;
