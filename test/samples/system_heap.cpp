@@ -15,7 +15,7 @@ int main()
         .fd_flags = O_CLOEXEC | O_RDWR,
     };
 
-    if (::ioctl(heap_fd, DMA_HEAP_IOCTL_ALLOC, &data))
+    if (::ioctl(heap_fd, DMA_HEAP_IOCTL_ALLOC, &data) < 0)
     {
         ::close(heap_fd);
         return -1;
@@ -29,7 +29,6 @@ int main()
     void *p = ::mmap(NULL, data.len, PROT_READ | PROT_WRITE, MAP_SHARED, dma_fd, 0);
     if (p == MAP_FAILED)
     {
-        ::munmap(p, data.len);
         ::close(dma_fd);
         return -1;
     }
