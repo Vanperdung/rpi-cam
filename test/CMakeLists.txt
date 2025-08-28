@@ -1,3 +1,5 @@
+add_subdirectory(samples)
+
 add_executable(shared_fd_test
     shared_fd_test.cpp
 )
