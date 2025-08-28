@@ -17,14 +17,17 @@ int main(int argc, char *argv[])
     };
 
     if (::ioctl(heap_fd, DMA_HEAP_IOCTL_ALLOC, &data) < 0)
+    {
+        ::close(heap_fd);
         return -1;
+    }
 
     int dma_fd = data.fd;
 
     ::close(heap_fd);
     
     void *p = ::mmap(NULL, data.len, PROT_READ | PROT_WRITE, MAP_SHARED, dma_fd, 0);
-    if (p == nullptr)
+    if (p == MAP_FAILED)
     {
         ::close(dma_fd);
         return -1;
