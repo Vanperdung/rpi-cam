@@ -1,4 +1,5 @@
 add_subdirectory(samples)
+add_subdirectory(media_device)
 
 add_executable(shared_fd_test
     shared_fd_test.cpp
